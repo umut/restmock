@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="repository" class="org.hoydaa.restmock.server.repository.ResourceRepository">
+        <property name="repositoryRoot" value="classpath:mock-repo/"/>
+        <!--
+            You can also point the repo to filesystem using a conf. similar to the following
+            <property name="repositoryRoot" value="file:/home/umut/temp/mock-repo/" />
+        -->
+    </bean>
+
+    <bean id="handler" class="org.hoydaa.restmock.server.MockHandler">
+        <property name="idCalculators">
+            <map>
+                <entry key=".*">
+                    <bean class="org.hoydaa.restmock.server.id.DefaultIdCalculator"/>
+                </entry>
+            </map>
+        </property>
+        <property name="postProcessors">
+            <map>
+                <entry key=".*">
+                    <bean class="org.hoydaa.restmock.server.processor.QueryParamSubstitutor"/>
+                </entry>
+            </map>
+        </property>
+        <property name="requestHandlers">
+            <map>
+                <!-- Informative routings -->
+                <entry key="^/$">
+                    <bean class="org.hoydaa.restmock.server.handler.RootHandler"/>
+                </entry>
+
+                <entry key="^/.+$">
+                    <bean class="org.hoydaa.restmock.server.handler.Manager"/>
+                </entry>
+            </map>
+        </property>
+        <property name="repository" ref="repository"/>
+    </bean>
+
+    <bean id="server" class="org.mortbay.jetty.Server" init-method="start">
+        <constructor-arg index="0" value="8989"/>
+        <property name="handler" ref="handler"/>
+    </bean>
+
+</beans>
