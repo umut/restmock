@@ -48,22 +48,4 @@
         <module>restmock-client</module>
     </modules>
 
-    <repositories>
-        <repository>
-            <id>eu.nexus</id>
-            <name>EU Nexus</name>
-            <url>https://mvn.sony-europe.com/content/groups/wcm.public/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>eu.nexus</id>
-            <name>EU Nexus</name>
-            <url>https://mvn.sony-europe.com/content/groups/wcm.public/</url>
-        </pluginRepository>
-    </pluginRepositories>
-
 </project>
