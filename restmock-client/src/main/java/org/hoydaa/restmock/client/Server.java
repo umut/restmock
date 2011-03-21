@@ -1,5 +1,6 @@
 package org.hoydaa.restmock.client;
 
+import org.apache.commons.collections.ListUtils;
 import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -96,16 +97,6 @@ public class Server {
         return writer.toString();
     }
 
-    private ObjectMapper getObjectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        SimpleModule myModule = new SimpleModule("MyModule", new Version(1, 0, 0, null));
-        myModule.addSerializer(new StreamSerializer());
-        myModule.addDeserializer(InputStream.class, new StreamDeserializer());
-        objectMapper.registerModule(myModule);
-
-        return objectMapper;
-    }
-
     public Request getRequest(String path, Method method) {
         for (Request request : requests) {
             if (request.getPath().equals(path) && request.getMethod().equals(method)) {
@@ -116,5 +107,18 @@ public class Server {
         return null;
     }
 
+    public void replay() {
+
+    }
+
+    private ObjectMapper getObjectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        SimpleModule myModule = new SimpleModule("MyModule", new Version(1, 0, 0, null));
+        myModule.addSerializer(new StreamSerializer());
+        myModule.addDeserializer(InputStream.class, new StreamDeserializer());
+        objectMapper.registerModule(myModule);
+
+        return objectMapper;
+    }
 
 }
