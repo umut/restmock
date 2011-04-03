@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * @author Umut Utkan
  */
-public class TestForBaseRestMockTest extends BaseRestMockTest {
+public class MainIntegrationTest extends BaseRestMockTest {
 
     @Test
     public void shouldDoThis() throws IOException {

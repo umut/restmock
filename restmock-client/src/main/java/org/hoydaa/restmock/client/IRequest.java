@@ -11,6 +11,8 @@ public interface IRequest {
 
     Method getMethod();
 
+    int getTimes();
+
     Map<String, String[]> getParams();
 
     Map<String, String> getHeaders();

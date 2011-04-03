@@ -56,7 +56,7 @@ public class MockHandlerTest {
         expect(request.getPathInfo()).andReturn("/api/service").anyTimes();
         expect(request.getMethod()).andReturn("GET").anyTimes();
         expect(requestRepository.isReady()).andReturn(true);
-        expect(requestRepository.getRequest("/api/service", "GET")).andReturn(null);
+        expect(requestRepository.getRequest(isA(HttpServletRequest.class))).andReturn(null);
         replay(request, requestRepository);
 
         mockHandler.handle(request, response);
@@ -75,7 +75,7 @@ public class MockHandlerTest {
         params1.put("param1", new String[] {"value1"});
         expect(mockRequest.getParams()).andReturn(params1).anyTimes();
         expect(requestRepository.isReady()).andReturn(true).anyTimes();
-        expect(requestRepository.getRequest("/api/service1", "GET")).andReturn(mockRequest).anyTimes();
+        expect(requestRepository.getRequest(isA(HttpServletRequest.class))).andReturn(mockRequest).anyTimes();
 
         expect(request.getPathInfo()).andReturn("/api/service1").anyTimes();
         expect(request.getMethod()).andReturn(Method.GET.name()).anyTimes();
@@ -106,7 +106,7 @@ public class MockHandlerTest {
         new Server().expect("/api/service1", Method.GET).withHeader("Accept", "application/json");
 
         IRequest mockRequest = createMock(IRequest.class);
-        expect(requestRepository.getRequest("/api/service1", "GET")).andReturn(mockRequest).anyTimes();
+        expect(requestRepository.getRequest(isA(HttpServletRequest.class))).andReturn(mockRequest).anyTimes();
         expect(requestRepository.isReady()).andReturn(true).anyTimes();
         HashMap<String, String> headers = new HashMap<String, String>();
         headers.put("Accept", "application/json");
@@ -116,7 +116,7 @@ public class MockHandlerTest {
 
         expect(request.getPathInfo()).andReturn("/api/service1").anyTimes();
         expect(request.getMethod()).andReturn(Method.GET.name()).anyTimes();
-        expect(request.getHeaderNames()).andReturn(new MockEnumeration(null)).anyTimes();
+        expect(request.getHeader("Accept")).andReturn(null).anyTimes();
         expect(request.getParameterMap()).andReturn(null).anyTimes();
         replay(request, requestRepository, response, mockRequest);
 

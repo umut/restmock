@@ -1,7 +1,9 @@
 package org.hoydaa.restmock.client;
 
+import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -12,6 +14,8 @@ public class Response {
     private int status;
 
     private InputStream stream;
+
+    private String contentPath;
 
     private String type;
 
@@ -24,6 +28,13 @@ public class Response {
     }
 
     public InputStream getStream() {
+        if (null != stream) {
+            try {
+                stream.reset();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         return stream;
     }
 
@@ -38,4 +49,13 @@ public class Response {
     public void setType(String type) {
         this.type = type;
     }
+
+    public String getContentPath() {
+        return contentPath;
+    }
+
+    public void setContentPath(String contentPath) {
+        this.contentPath = contentPath;
+    }
+
 }

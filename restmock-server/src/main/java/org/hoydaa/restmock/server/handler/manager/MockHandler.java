@@ -1,8 +1,9 @@
 package org.hoydaa.restmock.server.handler.manager;
 
+import org.apache.commons.io.IOUtils;
 import org.hoydaa.restmock.client.IRequest;
+import org.hoydaa.restmock.client.Request;
 import org.hoydaa.restmock.server.handler.AbstractRequestHandler;
-import org.hoydaa.restmock.server.handler.HttpServletRequestWrapper;
 import org.hoydaa.restmock.server.util.Utils;
 import org.springframework.util.Assert;
 
@@ -21,6 +22,8 @@ public class MockHandler extends AbstractRequestHandler {
 
     public static final int SC_REQUEST_MISMATCH = 903;
 
+    public static final int SC_EXCEEDED_CALL = 904;
+
     private RequestRepository requestRepository;
 
 
@@ -33,21 +36,31 @@ public class MockHandler extends AbstractRequestHandler {
             return;
         }
 
-        IRequest mockRequest = requestRepository.getRequest(request.getPathInfo(), request.getMethod());
+        IRequest mockRequest = null;
+        try {
+            mockRequest = requestRepository.getRequest(request);
+        } catch (RequestRepositoryException e) {
+            sendResponse(request, response, "Error while getting request from request repository", SC_EXCEEDED_CALL);
+            return;
+        }
+
         if (null == mockRequest) {
             sendResponse(request, response, "Unexpected call " + request.getMethod() + " - " + request.getPathInfo(), SC_UNEXPECTED_CALL);
             return;
         }
 
-        IRequest wrapped = new HttpServletRequestWrapper(request);
-        if (!Utils.equals(mockRequest, wrapped)) {
+        if (!Utils.equals(mockRequest, request)) {
             sendResponse(request, response, "Recorded request does not match to the request just made!"
-                    + "expected: " + mockRequest + ", actual: " + wrapped,
+                    + "expected: " + mockRequest + ", actual: " + request,
                     SC_REQUEST_MISMATCH);
             return;
         }
 
-        sendResponse(request, response, "Replaying...", HttpServletResponse.SC_OK);
+        Request mockkRequest = (Request) mockRequest;
+        response.setStatus(mockkRequest.getResponse().getStatus());
+        response.setContentType(mockkRequest.getResponse().getType());
+        ((org.mortbay.jetty.Request) request).setHandled(true);
+        IOUtils.copy(mockkRequest.getResponse().getStream(), response.getOutputStream());
     }
 
     public void setRequestRepository(RequestRepository requestRepository) {

@@ -14,6 +14,8 @@ public class Request implements IRequest {
 
     private String path;
 
+    private int times = 1;
+
     private Map<String, String[]> params = new HashMap<String, String[]>();
 
     private Map<String, String> headers = new HashMap<String, String>();
@@ -43,6 +45,14 @@ public class Request implements IRequest {
 
     public Map<String, String> getHeaders() {
         return headers;
+    }
+
+    public int getTimes() {
+        return times;
+    }
+
+    public void setTimes(int times) {
+        this.times = times;
     }
 
     public Response getResponse() {
