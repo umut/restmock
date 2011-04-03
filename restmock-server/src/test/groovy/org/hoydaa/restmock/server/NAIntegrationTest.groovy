@@ -77,4 +77,28 @@ class NAIntegrationTest extends BaseRestMockTest {
         }
     }
 
+    @Test
+    def void shouldTakeRequestParametersIntoAccount() {
+        new Server("http://localhost:8989").reset().expect("/service1", Method.GET).withParam("param1", ["value1"] as String[]).andReply("application/json", 200, "{\"param1\" : \"value1\"}").times(2).replay();
+        new HTTPBuilder("http://localhost:8989/service1").request(groovyx.net.http.Method.GET, ContentType.JSON) { req ->
+            headers.'Accept' = 'application/json'
+            response.success = { resp ->
+                fail("Should not have succeeded.")
+            }
+            response.failure = { resp ->
+                assertEquals(904, resp.statusLine.statusCode)
+            }
+        }
+        new HTTPBuilder("http://localhost:8989/service1?param1=value1").request(groovyx.net.http.Method.GET, ContentType.JSON) { req ->
+            headers.'Accept' = 'application/json'
+            response.success = { resp, json ->
+                assertEquals(200, resp.statusLine.statusCode)
+                assertEquals(json['param1'], 'value1')
+            }
+            response.failure = { resp ->
+                fail("Should not have failed with " + resp.statusLine.statusCode)
+            }
+        }
+    }
+
 }

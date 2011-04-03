@@ -49,10 +49,9 @@ public class MockHandler extends AbstractRequestHandler {
             return;
         }
 
-        if (!Utils.equals(mockRequest, request)) {
-            sendResponse(request, response, "Recorded request does not match to the request just made!"
-                    + "expected: " + mockRequest + ", actual: " + request,
-                    SC_REQUEST_MISMATCH);
+        ResponseStatus status = null;
+        if (null != (status = Utils.equals(mockRequest, request))) {
+            sendResponse(request, response, status.getExplanation(), status.getCode());
             return;
         }
 
@@ -60,7 +59,7 @@ public class MockHandler extends AbstractRequestHandler {
         response.setStatus(mockkRequest.getResponse().getStatus());
         response.setContentType(mockkRequest.getResponse().getType());
         ((org.mortbay.jetty.Request) request).setHandled(true);
-        IOUtils.copy(mockkRequest.getResponse().getStream(), response.getOutputStream());
+        IOUtils.copy(mockkRequest.getResponse().getStream(), response.getWriter());
     }
 
     public void setRequestRepository(RequestRepository requestRepository) {
