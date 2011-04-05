@@ -1,5 +1,6 @@
 package org.hoydaa.restmock.server.handler;
 
+import org.hoydaa.restmock.server.handler.manager.ResponseStatus;
 import org.mortbay.jetty.Request;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +17,8 @@ abstract public class AbstractRequestHandler implements RequestHandler {
         sendResponse(request, response, message, HttpServletResponse.SC_BAD_REQUEST);
     }
 
-    protected void sendExpectationError(HttpServletRequest request, HttpServletResponse response, String message) throws IOException {
-        sendResponse(request, response, message, 999);
+    protected void sendExpectationError(HttpServletRequest request, HttpServletResponse response, ResponseStatus status) throws IOException {
+        sendResponse(request, response, status.getExplanation(), status.getCode());
     }
 
     protected void sendResponse(HttpServletRequest request, HttpServletResponse response, String error, int code) throws IOException {

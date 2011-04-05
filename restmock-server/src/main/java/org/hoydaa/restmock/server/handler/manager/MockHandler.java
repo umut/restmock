@@ -27,12 +27,12 @@ public class MockHandler extends AbstractRequestHandler {
         try {
             mockRequest = requestRepository.getRequest(request);
         } catch (RequestRepositoryException e) {
-            sendResponse(request, response, e.getStatus().getExplanation(), e.getStatus().getCode());
+            sendExpectationError(request, response, e.getStatus());
             return;
         }
 
         if (null == mockRequest) {
-            sendResponse(request, response, ResponseStatus.UNEXPECTED_CALL.getExplanation(), ResponseStatus.UNEXPECTED_CALL.getCode());
+            sendExpectationError(request, response, ResponseStatus.UNEXPECTED_CALL);
             return;
         }
 
