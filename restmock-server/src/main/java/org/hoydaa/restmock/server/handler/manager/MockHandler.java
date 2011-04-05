@@ -16,14 +16,6 @@ import java.io.IOException;
  */
 public class MockHandler extends AbstractRequestHandler {
 
-    public static final int SC_EXPECTATIONS_NOT_SET = 901;
-
-    public static final int SC_UNEXPECTED_CALL = 902;
-
-    public static final int SC_REQUEST_MISMATCH = 903;
-
-    public static final int SC_EXCEEDED_CALL = 904;
-
     private RequestRepository requestRepository;
 
 
@@ -31,21 +23,16 @@ public class MockHandler extends AbstractRequestHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Assert.notNull(requestRepository, "RequestRepository cannot be null!");
 
-        if (!requestRepository.isReady()) {
-            sendResponse(request, response, "Expectations not set, please set the expectations first!", SC_EXPECTATIONS_NOT_SET);
-            return;
-        }
-
         IRequest mockRequest = null;
         try {
             mockRequest = requestRepository.getRequest(request);
         } catch (RequestRepositoryException e) {
-            sendResponse(request, response, "Error while getting request from request repository", SC_EXCEEDED_CALL);
+            sendResponse(request, response, e.getStatus().getExplanation(), e.getStatus().getCode());
             return;
         }
 
         if (null == mockRequest) {
-            sendResponse(request, response, "Unexpected call " + request.getMethod() + " - " + request.getPathInfo(), SC_UNEXPECTED_CALL);
+            sendResponse(request, response, ResponseStatus.UNEXPECTED_CALL.getExplanation(), ResponseStatus.UNEXPECTED_CALL.getCode());
             return;
         }
 

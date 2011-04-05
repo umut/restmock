@@ -7,11 +7,12 @@ import static junit.framework.TestCase.*
 import org.hoydaa.restmock.server.handler.manager.MockHandler
 import org.hoydaa.restmock.client.Server
 import org.hoydaa.restmock.client.Method
+import org.hoydaa.restmock.server.handler.manager.ResponseStatus
 
 /**
  * @author Umut Utkan
  */
-class NAIntegrationTest extends BaseRestMockTest {
+class IntegrationTest extends BaseRestMockTest {
 
     @Test
     def void shouldReturnNotReadyResponse() {
@@ -22,7 +23,7 @@ class NAIntegrationTest extends BaseRestMockTest {
                 fail("Should not have returned " + resp.statusLine.statusCode)
             }
             response.failure = { resp ->
-                assertEquals(MockHandler.SC_EXPECTATIONS_NOT_SET, resp.statusLine.statusCode)
+                assertEquals(ResponseStatus.NOT_READY.getCode(), resp.statusLine.statusCode)
             }
         }
     }
@@ -47,7 +48,7 @@ class NAIntegrationTest extends BaseRestMockTest {
                 fail("Should have failed.")
             }
             response.failure = { resp ->
-                assertEquals(904, resp.statusLine.statusCode)
+                assertEquals(ResponseStatus.EXCEEDED_CALL.getCode(), resp.statusLine.statusCode)
             }
         }
     }

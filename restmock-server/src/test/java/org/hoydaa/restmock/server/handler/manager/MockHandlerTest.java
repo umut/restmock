@@ -47,12 +47,12 @@ public class MockHandlerTest {
     @Test
     public void shouldTestForExpectations() throws IOException {
         expect(request.getPathInfo()).andReturn("/api/service").anyTimes();
-        expect(requestRepository.isReady()).andReturn(false);
+        expect(requestRepository.getRequest(isA(HttpServletRequest.class))).andThrow(new RequestRepositoryException(ResponseStatus.NOT_READY));
         replay(request, requestRepository);
 
         mockHandler.handle(request, response);
 
-        assertEquals(MockHandler.SC_EXPECTATIONS_NOT_SET, MockedMockHandler.code);
+        assertEquals(ResponseStatus.NOT_READY.getCode(), MockedMockHandler.code);
 
         verify(request, requestRepository);
     }
@@ -61,13 +61,12 @@ public class MockHandlerTest {
     public void shouldTestForExistence() throws IOException {
         expect(request.getPathInfo()).andReturn("/api/service").anyTimes();
         expect(request.getMethod()).andReturn("GET").anyTimes();
-        expect(requestRepository.isReady()).andReturn(true);
         expect(requestRepository.getRequest(isA(HttpServletRequest.class))).andReturn(null);
         replay(request, requestRepository);
 
         mockHandler.handle(request, response);
 
-        assertEquals(MockHandler.SC_UNEXPECTED_CALL, MockedMockHandler.code);
+        assertEquals(ResponseStatus.UNEXPECTED_CALL.getCode(), MockedMockHandler.code);
 
         verify(request, requestRepository);
     }

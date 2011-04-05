@@ -29,6 +29,10 @@ public class RequestRepositoryImpl implements RequestRepository {
 
     @Override
     public IRequest getRequest(HttpServletRequest request) throws RequestRepositoryException {
+        if(null == server) {
+            throw new RequestRepositoryException(ResponseStatus.NOT_READY);
+        }
+
         IRequest mocked = server.getRequest(request.getPathInfo(), Method.valueOf(request.getMethod().toUpperCase()));
         if(null == mocked) {
             return null;
@@ -38,7 +42,7 @@ public class RequestRepositoryImpl implements RequestRepository {
         callCounts.put(mocked, ++count);
 
         if (mocked.getTimes() != -1 && count > mocked.getTimes()) {
-            throw new RequestRepositoryException(RequestRepositoryException.ERROR_EXCEEDED_CALL, "Call time exceeded.");
+            throw new RequestRepositoryException(ResponseStatus.EXCEEDED_CALL);
         }
 
         return mocked;

@@ -5,21 +5,14 @@ package org.hoydaa.restmock.server.handler.manager;
  */
 public class RequestRepositoryException extends RuntimeException {
 
-    public final static int ERROR_EXCEEDED_CALL = 1;
+    private ResponseStatus status;
 
-    public static final int ERROR_NOT_SET = 2;
-
-
-    private int code;
-
-
-    public RequestRepositoryException(int code, String s) {
-        super(s);
-        this.code = code;
+    public RequestRepositoryException(ResponseStatus status) {
+        this.status = status;
     }
 
-    public int getCode() {
-        return code;
+    public ResponseStatus getStatus() {
+        return status;
     }
 
 }

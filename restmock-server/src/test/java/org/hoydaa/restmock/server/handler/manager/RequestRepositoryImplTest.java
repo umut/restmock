@@ -18,7 +18,7 @@ import static org.easymock.EasyMock.*;
 public class RequestRepositoryImplTest {
 
     @Test
-    public void should() throws IOException {
+    public void shouldReturnMockRequestProperly() throws IOException {
         Server server = new Server().expect("/service1", Method.GET).andReply("application/json", 200, "{}")
                 .expect("/service2", Method.GET).andReply("application/json", 200, "{}").times(2);
         RequestRepositoryImpl requestRepository = new RequestRepositoryImpl();
