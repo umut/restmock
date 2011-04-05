@@ -4,7 +4,6 @@ import groovyx.net.http.HTTPBuilder
 import org.junit.Test
 import groovyx.net.http.ContentType
 import static junit.framework.TestCase.*
-import org.hoydaa.restmock.server.handler.manager.MockHandler
 import org.hoydaa.restmock.client.Server
 import org.hoydaa.restmock.client.Method
 import org.hoydaa.restmock.server.handler.manager.ResponseStatus
@@ -62,7 +61,7 @@ class IntegrationTest extends BaseRestMockTest {
                 fail("Should not have succeeded.")
             }
             response.failure = { resp ->
-                assertEquals(903, resp.statusLine.statusCode)
+                assertEquals(ResponseStatus.HEADER_MISMATCH.getCode(), resp.statusLine.statusCode)
             }
         }
         new HTTPBuilder("http://localhost:8989/service1").request(groovyx.net.http.Method.GET, ContentType.JSON) { req ->
@@ -87,7 +86,7 @@ class IntegrationTest extends BaseRestMockTest {
                 fail("Should not have succeeded.")
             }
             response.failure = { resp ->
-                assertEquals(904, resp.statusLine.statusCode)
+                assertEquals(ResponseStatus.PARAM_MISMATCH.getCode(), resp.statusLine.statusCode)
             }
         }
         new HTTPBuilder("http://localhost:8989/service1?param1=value1").request(groovyx.net.http.Method.GET, ContentType.JSON) { req ->
