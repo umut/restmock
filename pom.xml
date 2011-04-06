@@ -110,8 +110,8 @@
 
     <modules>
         <module>restmock-server</module>
-        <module>restmock-client</module>
-    <module>restmock-test</module>
+        <module>restmock-client-java</module>
+        <module>restmock-test</module>
   </modules>
 
 </project>

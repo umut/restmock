@@ -32,9 +32,6 @@ public class Utils {
             }
         }
 
-        //if (from.getPath() != null ? !from.getPath().equals(o.getPathInfo()) : o.getPathInfo() != null)
-        //    return ResponseStatus.REQUEST_MISMATCH;
-
         return null;
     }
 
