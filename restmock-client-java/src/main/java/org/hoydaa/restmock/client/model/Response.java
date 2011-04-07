@@ -1,7 +1,4 @@
-package org.hoydaa.restmock.client;
-
-import org.apache.commons.io.IOUtils;
-import org.codehaus.jackson.annotate.JsonIgnore;
+package org.hoydaa.restmock.client.model;
 
 import java.io.IOException;
 import java.io.InputStream;

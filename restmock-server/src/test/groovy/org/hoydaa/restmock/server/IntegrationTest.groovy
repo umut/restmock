@@ -3,10 +3,11 @@ package org.hoydaa.restmock.server
 import groovyx.net.http.HTTPBuilder
 import org.junit.Test
 import groovyx.net.http.ContentType
-import static junit.framework.TestCase.*
-import org.hoydaa.restmock.client.Server
-import org.hoydaa.restmock.client.Method
+
+import org.hoydaa.restmock.client.model.Method
 import org.hoydaa.restmock.server.handler.manager.ResponseStatus
+import static org.junit.Assert.*
+import org.hoydaa.restmock.client.RestMock
 
 /**
  * @author Umut Utkan
@@ -15,7 +16,7 @@ class IntegrationTest extends BaseRestMockTest {
 
     @Test
     def void shouldReturnNotReadyResponse() {
-        new Server("http://localhost:8989").reset();
+        RestMock.defineServer("http://localhost:8989").reset()
         new HTTPBuilder("http://localhost:8989/service1").request(groovyx.net.http.Method.GET, ContentType.JSON) { req ->
             headers.'Accept' = 'application/json'
             response.success = { resp ->
@@ -29,7 +30,7 @@ class IntegrationTest extends BaseRestMockTest {
 
     @Test
     def void shouldTakeTimesIntoAccount() {
-        new Server("http://localhost:8989").expect("/service1", Method.GET).andReply("application/json", 200, "{\"param1\" : \"value1\"}").times(3).replay()
+        RestMock.defineServer("http://localhost:8989").expect("/service1", Method.GET).andReply("application/json", 200, "{\"param1\" : \"value1\"}").times(3).replay()
         for (int i = 0; i < 3; i++) {
             new HTTPBuilder("http://localhost:8989/service1").request(groovyx.net.http.Method.GET, ContentType.JSON) { req ->
                 headers.'Accept' = 'application/json'
@@ -54,7 +55,7 @@ class IntegrationTest extends BaseRestMockTest {
 
     @Test
     def void shouldTakeHeadersIntoAccount() {
-        new Server("http://localhost:8989").reset().expect("/service1", Method.GET).withHeader("Dummy", "DummyValue").andReply("application/json", 200, "{\"param1\" : \"value1\"}").times(2).replay();
+        RestMock.defineServer("http://localhost:8989").reset().expect("/service1", Method.GET).withHeader("Dummy", "DummyValue").andReply("application/json", 200, "{\"param1\" : \"value1\"}").times(2).replay();
         new HTTPBuilder("http://localhost:8989/service1").request(groovyx.net.http.Method.GET, ContentType.JSON) { req ->
             headers.'Accept' = 'application/json'
             response.success = { resp ->
@@ -79,7 +80,7 @@ class IntegrationTest extends BaseRestMockTest {
 
     @Test
     def void shouldTakeRequestParametersIntoAccount() {
-        new Server("http://localhost:8989").reset().expect("/service1", Method.GET).withParam("param1", ["value1"] as String[]).andReply("application/json", 200, "{\"param1\" : \"value1\"}").times(2).replay();
+        RestMock.defineServer("http://localhost:8989").reset().expect("/service1", Method.GET).withParam("param1", ["value1"] as String[]).andReply("application/json", 200, "{\"param1\" : \"value1\"}").times(2).replay();
         new HTTPBuilder("http://localhost:8989/service1").request(groovyx.net.http.Method.GET, ContentType.JSON) { req ->
             headers.'Accept' = 'application/json'
             response.success = { resp ->

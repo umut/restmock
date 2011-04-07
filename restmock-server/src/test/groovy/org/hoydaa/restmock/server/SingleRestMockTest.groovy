@@ -5,7 +5,7 @@ import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.Method
 import org.junit.Before
 import org.slf4j.LoggerFactory
-import org.hoydaa.restmock.client.Server
+import org.hoydaa.restmock.client.model.Server
 
 /**
  * @author Umut Utkan

@@ -1,25 +1,22 @@
 package org.hoydaa.restmock.server.handler.manager;
 
 import org.apache.commons.io.IOUtils;
-import org.hoydaa.restmock.client.IRequest;
-import org.hoydaa.restmock.client.Method;
-import org.hoydaa.restmock.client.Request;
-import org.hoydaa.restmock.client.Server;
+import org.hoydaa.restmock.client.model.Method;
+import org.hoydaa.restmock.client.model.Request;
+import org.hoydaa.restmock.client.model.Server;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
-import java.util.HashMap;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.easymock.EasyMock.*;
+import static org.easymock.classextension.EasyMock.*;
 
 /**
  * @author Umut Utkan
@@ -73,12 +70,10 @@ public class MockHandlerTest {
 
     @Test
     public void shouldTestForParameterMismatch() throws IOException {
-        IRequest mockRequest = createMock(IRequest.class);
-        expect(mockRequest.getHeaders()).andReturn(new HashMap<String, String>()).anyTimes();
-        expect(mockRequest.getMethod()).andReturn(Method.GET).anyTimes();
-        HashMap<String, String[]> params1 = new HashMap<String, String[]>();
-        params1.put("param1", new String[]{"value1"});
-        expect(mockRequest.getParams()).andReturn(params1).anyTimes();
+        Request mockRequest = new Request();
+        mockRequest.setMethod(Method.GET);
+        mockRequest.getParams().put("param1", new String[]{"value1"});
+
         expect(requestRepository.isReady()).andReturn(true).anyTimes();
         expect(requestRepository.getRequest(isA(HttpServletRequest.class))).andReturn(mockRequest).anyTimes();
 
@@ -86,7 +81,7 @@ public class MockHandlerTest {
         expect(request.getMethod()).andReturn(Method.GET.name()).anyTimes();
         expect(request.getHeaderNames()).andReturn(new MockEnumeration(null)).anyTimes();
         expect(request.getParameterValues("param1")).andReturn(null).anyTimes();
-        replay(request, response, mockRequest, requestRepository);
+        replay(request, response, requestRepository);
 
         mockHandler.handle(request, response);
         assertEquals(ResponseStatus.PARAM_MISMATCH.getCode(), MockedMockHandler.code);
@@ -101,14 +96,14 @@ public class MockHandlerTest {
         mockHandler.handle(request, response);
         assertEquals(ResponseStatus.PARAM_MISMATCH.getCode(), MockedMockHandler.code);
 
-        verify(request, response, requestRepository, mockRequest);
+        verify(request, response, requestRepository);
     }
 
     //TODO: fix this later
     @Ignore
     @Test
     public void shouldTestForHeaderMismatch() throws IOException {
-        new Server().expect("/api/service1", Method.GET).withHeader("Accept", "application/json");
+        //new Server().expect("/api/service1", Method.GET).withHeader("Accept", "application/json");
 
         Request mockRequest = new Request();
         mockRequest.setPath("/api/service1");
@@ -132,7 +127,7 @@ public class MockHandlerTest {
 
         mockHandler.handle(request, response);
 
-        new Server().expect("/api/service1", Method.GET).withHeader("Accept", "application/json");
+        //new Server().expect("/api/service1", Method.GET).withHeader("Accept", "application/json");
 
         reset(request, response);
         expect(request.getPathInfo()).andReturn("/api/service1").anyTimes();

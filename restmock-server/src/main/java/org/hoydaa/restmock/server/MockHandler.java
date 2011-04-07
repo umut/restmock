@@ -1,7 +1,6 @@
 package org.hoydaa.restmock.server;
 
 import org.apache.commons.io.IOUtils;
-import org.hoydaa.restmock.client.Server;
 import org.hoydaa.restmock.server.handler.RequestHandler;
 import org.hoydaa.restmock.server.id.IdCalculator;
 import org.hoydaa.restmock.server.processor.PostProcessor;

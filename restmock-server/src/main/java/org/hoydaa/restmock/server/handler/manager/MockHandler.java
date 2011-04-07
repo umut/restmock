@@ -1,8 +1,7 @@
 package org.hoydaa.restmock.server.handler.manager;
 
 import org.apache.commons.io.IOUtils;
-import org.hoydaa.restmock.client.IRequest;
-import org.hoydaa.restmock.client.Request;
+import org.hoydaa.restmock.client.model.Request;
 import org.hoydaa.restmock.server.handler.AbstractRequestHandler;
 import org.hoydaa.restmock.server.util.Utils;
 import org.springframework.util.Assert;
@@ -23,7 +22,7 @@ public class MockHandler extends AbstractRequestHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Assert.notNull(requestRepository, "RequestRepository cannot be null!");
 
-        IRequest mockRequest = null;
+        Request mockRequest = null;
         try {
             mockRequest = requestRepository.getRequest(request);
         } catch (RequestRepositoryException e) {

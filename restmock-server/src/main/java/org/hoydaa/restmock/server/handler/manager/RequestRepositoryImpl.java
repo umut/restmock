@@ -1,8 +1,8 @@
 package org.hoydaa.restmock.server.handler.manager;
 
-import org.hoydaa.restmock.client.IRequest;
-import org.hoydaa.restmock.client.Method;
-import org.hoydaa.restmock.client.Server;
+import org.hoydaa.restmock.client.model.Method;
+import org.hoydaa.restmock.client.model.Request;
+import org.hoydaa.restmock.client.model.Server;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ public class RequestRepositoryImpl implements RequestRepository {
 
     private Server server;
 
-    private Map<IRequest, Integer> callCounts = new HashMap<IRequest, Integer>();
+    private Map<Request, Integer> callCounts = new HashMap<Request, Integer>();
 
 
     public void setServer(Server server) {
@@ -28,12 +28,12 @@ public class RequestRepositoryImpl implements RequestRepository {
     }
 
     @Override
-    public IRequest getRequest(HttpServletRequest request) throws RequestRepositoryException {
+    public Request getRequest(HttpServletRequest request) throws RequestRepositoryException {
         if(null == server) {
             throw new RequestRepositoryException(ResponseStatus.NOT_READY);
         }
 
-        IRequest mocked = server.getRequest(request.getPathInfo(), Method.valueOf(request.getMethod().toUpperCase()));
+        Request mocked = server.getRequest(request.getPathInfo(), Method.valueOf(request.getMethod().toUpperCase()));
         if(null == mocked) {
             return null;
         }

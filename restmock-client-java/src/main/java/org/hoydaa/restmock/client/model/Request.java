@@ -1,4 +1,4 @@
-package org.hoydaa.restmock.client;
+package org.hoydaa.restmock.client.model;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +8,7 @@ import java.util.Map;
  *
  * @author Umut Utkan
  */
-public class Request implements IRequest {
+public class Request {
 
     private Method method;
 

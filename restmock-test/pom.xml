@@ -23,7 +23,11 @@
             <groupId>org.hoydaa.restmock</groupId>
             <artifactId>restmock-server</artifactId>
             <version>${project.version}</version>
-            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hoydaa.restmock</groupId>
+            <artifactId>restmock-client-java</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

@@ -1,7 +1,7 @@
 package org.hoydaa.restmock.server.handler.manager;
 
 import org.apache.commons.io.IOUtils;
-import org.hoydaa.restmock.client.Server;
+import org.hoydaa.restmock.client.model.Server;
 import org.hoydaa.restmock.server.handler.AbstractRequestHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
