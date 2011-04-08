@@ -1,9 +1,8 @@
 package org.hoydaa.restmock.server.handler.manager;
 
 import org.apache.commons.io.IOUtils;
-import org.hoydaa.restmock.client.model.Method;
-import org.hoydaa.restmock.client.model.Request;
-import org.hoydaa.restmock.client.model.Server;
+import org.hoydaa.restmock.model.Method;
+import org.hoydaa.restmock.model.Request;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;

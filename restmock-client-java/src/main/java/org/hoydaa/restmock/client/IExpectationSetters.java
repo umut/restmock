@@ -1,6 +1,7 @@
 package org.hoydaa.restmock.client;
 
-import org.hoydaa.restmock.client.model.Method;
+
+import org.hoydaa.restmock.model.Method;
 
 import java.io.IOException;
 import java.io.InputStream;

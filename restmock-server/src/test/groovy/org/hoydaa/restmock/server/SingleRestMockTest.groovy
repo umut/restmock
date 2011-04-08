@@ -5,7 +5,7 @@ import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.Method
 import org.junit.Before
 import org.slf4j.LoggerFactory
-import org.hoydaa.restmock.client.model.Server
+import org.hoydaa.restmock.model.Server
 
 /**
  * @author Umut Utkan
@@ -20,7 +20,7 @@ abstract class SingleRestMockTest extends BaseRestMockTest {
         setupServer setupData.toJsonString()
     }
 
-    abstract def Server getSetupData()
+    abstract def org.hoydaa.restmock.model.Server getSetupData()
 
     def setupServer(data) {
         new HTTPBuilder("http://localhost:8989/manage").request(Method.POST, ContentType.JSON) { req ->

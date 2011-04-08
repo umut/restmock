@@ -1,7 +1,7 @@
 package org.hoydaa.restmock.server.handler.manager;
 
 import org.apache.commons.io.IOUtils;
-import org.hoydaa.restmock.client.model.Request;
+import org.hoydaa.restmock.model.Request;
 import org.hoydaa.restmock.server.handler.AbstractRequestHandler;
 import org.hoydaa.restmock.server.util.Utils;
 import org.springframework.util.Assert;

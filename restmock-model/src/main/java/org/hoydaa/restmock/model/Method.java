@@ -1,4 +1,4 @@
-package org.hoydaa.restmock.client.model;
+package org.hoydaa.restmock.model;
 
 /**
  * Enum for HTTP methods

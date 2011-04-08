@@ -112,6 +112,7 @@
         <module>restmock-server</module>
         <module>restmock-client-java</module>
         <module>restmock-test</module>
+    <module>restmock-model</module>
   </modules>
 
 </project>

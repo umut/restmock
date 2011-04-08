@@ -1,4 +1,4 @@
-package org.hoydaa.restmock.client.model;
+package org.hoydaa.restmock.model;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.DeleteMethod;
@@ -8,15 +8,12 @@ import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.module.SimpleModule;
-import org.hoydaa.restmock.client.IExpectationSetters;
-import org.hoydaa.restmock.client.util.StreamDeserializer;
-import org.hoydaa.restmock.client.util.StreamSerializer;
+import org.hoydaa.restmock.util.StreamDeserializer;
+import org.hoydaa.restmock.util.StreamSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 

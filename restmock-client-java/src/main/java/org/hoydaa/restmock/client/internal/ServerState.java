@@ -1,9 +1,8 @@
 package org.hoydaa.restmock.client.internal;
 
 import org.hoydaa.restmock.client.IServerState;
-import org.hoydaa.restmock.client.model.Request;
-import org.hoydaa.restmock.client.model.Response;
-import org.hoydaa.restmock.client.model.Server;
+import org.hoydaa.restmock.model.Request;
+import org.hoydaa.restmock.model.Server;
 
 /**
  * @author Umut Utkan

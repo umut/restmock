@@ -1,7 +1,6 @@
 package org.hoydaa.restmock.client;
 
-import org.hoydaa.restmock.client.model.Request;
-import org.hoydaa.restmock.client.model.Response;
+import org.hoydaa.restmock.model.Request;
 
 /**
  * @author Umut Utkan

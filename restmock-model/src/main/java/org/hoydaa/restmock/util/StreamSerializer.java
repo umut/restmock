@@ -1,4 +1,4 @@
-package org.hoydaa.restmock.client.util;
+package org.hoydaa.restmock.util;
 
 import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.JsonGenerator;

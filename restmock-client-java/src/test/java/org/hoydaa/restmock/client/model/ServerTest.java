@@ -4,9 +4,9 @@ import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.io.IOUtils;
 import org.hoydaa.restmock.client.RestMock;
 import org.hoydaa.restmock.client.internal.ServerControl;
-import org.hoydaa.restmock.client.model.Headers;
-import org.hoydaa.restmock.client.model.Method;
-import org.hoydaa.restmock.client.model.Server;
+import org.hoydaa.restmock.model.Headers;
+import org.hoydaa.restmock.model.Method;
+import org.hoydaa.restmock.model.Server;
 import org.junit.Test;
 
 import java.io.IOException;

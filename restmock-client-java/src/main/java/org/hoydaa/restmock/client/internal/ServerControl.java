@@ -5,24 +5,18 @@ import org.apache.commons.httpclient.methods.DeleteMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.codehaus.jackson.Version;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.module.SimpleModule;
 import org.hoydaa.restmock.client.IExpectationSetters;
 import org.hoydaa.restmock.client.IServerControl;
-import org.hoydaa.restmock.client.model.Method;
-import org.hoydaa.restmock.client.model.Request;
-import org.hoydaa.restmock.client.model.Server;
 import org.hoydaa.restmock.client.util.Assert;
-import org.hoydaa.restmock.client.util.StreamDeserializer;
-import org.hoydaa.restmock.client.util.StreamSerializer;
+import org.hoydaa.restmock.model.Method;
+import org.hoydaa.restmock.model.Request;
+import org.hoydaa.restmock.model.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 

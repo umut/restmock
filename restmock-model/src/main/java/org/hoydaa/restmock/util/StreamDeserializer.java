@@ -1,4 +1,4 @@
-package org.hoydaa.restmock.client.util;
+package org.hoydaa.restmock.util;
 
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.JsonProcessingException;

@@ -1,4 +1,4 @@
-package org.hoydaa.restmock.client.model;
+package org.hoydaa.restmock.model;
 
 import java.util.HashMap;
 import java.util.Map;
