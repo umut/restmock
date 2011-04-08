@@ -96,4 +96,8 @@ public class MockHandler extends AbstractHandler {
         this.requestHandlers = requestHandlers;
     }
 
+    public void putRequestHandler(String regex, RequestHandler requestHandler) {
+        this.requestHandlers.put(regex, requestHandler);
+    }
+
 }

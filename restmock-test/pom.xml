@@ -24,11 +24,34 @@
             <artifactId>restmock-server</artifactId>
             <version>${project.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.hoydaa.restmock</groupId>
             <artifactId>restmock-client-java</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.5.11</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.5.11</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>http-builder</artifactId>
+            <version>0.4.1</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <properties>
