@@ -1,19 +1,13 @@
 package org.hoydaa.restmock.model;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.DeleteMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.module.SimpleModule;
-import org.hoydaa.restmock.util.StreamDeserializer;
-import org.hoydaa.restmock.util.StreamSerializer;
+import org.hoydaa.restmock.util.JacksonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +38,7 @@ public class Server {
     }
 
     public Server configure(String json) throws IOException {
-        ObjectMapper objectMapper = getObjectMapper();
+        ObjectMapper objectMapper = JacksonUtils.getObjectMapper();
 
         return objectMapper.readValue(new StringReader(json), Server.class);
     }
@@ -82,21 +76,11 @@ public class Server {
     public String toJsonString() throws IOException {
         StringWriter writer = new StringWriter();
 
-        ObjectMapper objectMapper = getObjectMapper();
+        ObjectMapper objectMapper = JacksonUtils.getObjectMapper();
 
         objectMapper.writeValue(writer, this);
 
         return writer.toString();
-    }
-
-    private ObjectMapper getObjectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        SimpleModule myModule = new SimpleModule("MyModule", new Version(1, 0, 0, null));
-        myModule.addSerializer(new StreamSerializer());
-        myModule.addDeserializer(InputStream.class, new StreamDeserializer());
-        objectMapper.registerModule(myModule);
-
-        return objectMapper;
     }
 
 }

@@ -1,9 +1,10 @@
 package org.hoydaa.restmock.server.handler.manager;
 
-import org.hoydaa.restmock.client.RestMock;
-import org.hoydaa.restmock.client.internal.ServerControl;
+import org.apache.commons.io.IOUtils;
 import org.hoydaa.restmock.model.Method;
 import org.hoydaa.restmock.model.Request;
+import org.hoydaa.restmock.model.Response;
+import org.hoydaa.restmock.model.Server;
 import org.junit.Test;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,13 +21,32 @@ public class RequestRepositoryImplTest {
 
     @Test
     public void shouldReturnMockRequestProperly() throws IOException {
-        ServerControl control = (ServerControl) RestMock.defineServer("http://localhost:8989")
-                .expect("/service1", Method.GET).andReply("application/json", 200, "{}")
-                .expect("/service2", Method.GET).andReply("application/json", 200, "{}").times(2);
-        control.finish();
+        Server server = new Server();
+        server.setUrl("http://localhost:8989");
+
+        Response res1 = new Response();
+        res1.setType("application/json");
+        res1.setStatus(200);
+        res1.setStream(IOUtils.toInputStream("{}"));
+        Request req1 = new Request();
+        req1.setPath("/service1");
+        req1.setMethod(Method.GET);
+        req1.setResponse(res1);
+        server.getRequests().add(req1);
+
+        Response res2 = new Response();
+        res2.setType("application/json");
+        res2.setStatus(200);
+        res2.setStream(IOUtils.toInputStream("{}"));
+        Request req2 = new Request();
+        req2.setPath("/service2");
+        req2.setMethod(Method.GET);
+        req2.setResponse(res2);
+        req2.setTimes(2);
+        server.getRequests().add(req2);
 
         RequestRepositoryImpl requestRepository = new RequestRepositoryImpl();
-        requestRepository.setServer(control.getServer());
+        requestRepository.setServer(server);
 
         HttpServletRequest service1 = createMock(HttpServletRequest.class);
         expect(service1.getPathInfo()).andReturn("/service1").anyTimes();
