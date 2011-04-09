@@ -1,4 +1,4 @@
-package org.hoydaa.restmock.server.handler.manager;
+package org.hoydaa.restmock.server.manager;
 
 import org.apache.commons.io.IOUtils;
 import org.hoydaa.restmock.model.Request;

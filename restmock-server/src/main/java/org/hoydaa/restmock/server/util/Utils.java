@@ -3,7 +3,7 @@ package org.hoydaa.restmock.server.util;
 import org.apache.commons.lang.ArrayUtils;
 import org.hoydaa.restmock.model.Method;
 import org.hoydaa.restmock.model.Request;
-import org.hoydaa.restmock.server.handler.manager.ResponseStatus;
+import org.hoydaa.restmock.server.manager.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;

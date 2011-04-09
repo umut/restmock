@@ -1,4 +1,4 @@
-package org.hoydaa.restmock.server.handler.manager;
+package org.hoydaa.restmock.server.manager;
 
 /**
  * Represents the HTTP statuses --those are related to mock handler-- that will be returned by mock handler.

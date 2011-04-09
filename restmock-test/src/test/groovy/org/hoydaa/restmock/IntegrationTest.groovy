@@ -1,11 +1,8 @@
 package org.hoydaa.restmock
 
-import groovyx.net.http.HTTPBuilder
 import org.junit.Test
-import groovyx.net.http.ContentType
 
-import org.hoydaa.restmock.model.Method
-import org.hoydaa.restmock.server.handler.manager.ResponseStatus
+import org.hoydaa.restmock.server.manager.ResponseStatus
 import static org.junit.Assert.*
 import org.hoydaa.restmock.client.RestMock
 import org.hoydaa.restmock.server.BaseRestMockTest

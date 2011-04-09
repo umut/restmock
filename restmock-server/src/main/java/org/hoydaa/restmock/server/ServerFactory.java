@@ -1,7 +1,9 @@
 package org.hoydaa.restmock.server;
 
-import org.hoydaa.restmock.server.handler.manager.ManagerHandler;
-import org.hoydaa.restmock.server.handler.manager.RestMockHandler;
+import org.hoydaa.restmock.server.manager.ManagerHandler;
+import org.hoydaa.restmock.server.manager.RequestRepository;
+import org.hoydaa.restmock.server.manager.RequestRepositoryImpl;
+import org.hoydaa.restmock.server.manager.RestMockHandler;
 import org.mortbay.jetty.Server;
 
 /**
@@ -9,9 +11,12 @@ import org.mortbay.jetty.Server;
  */
 public class ServerFactory {
 
-    public static void startServer(int port) throws Exception {
+    public static void createServer(int port) throws Exception {
+        RequestRepository requestRepository = new RequestRepositoryImpl();
         ManagerHandler managerHandler = new ManagerHandler();
-        org.hoydaa.restmock.server.handler.manager.MockHandler mockHandler = new org.hoydaa.restmock.server.handler.manager.MockHandler();
+        managerHandler.setRequestRepository(requestRepository);
+        org.hoydaa.restmock.server.manager.MockHandler mockHandler = new org.hoydaa.restmock.server.manager.MockHandler();
+        mockHandler.setRequestRepository(requestRepository);
         RestMockHandler restMockHandler = new RestMockHandler();
         restMockHandler.setManagerHandler(managerHandler);
         restMockHandler.setMockHandler(mockHandler);

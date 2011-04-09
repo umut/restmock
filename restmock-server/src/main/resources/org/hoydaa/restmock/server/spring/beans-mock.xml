@@ -12,7 +12,7 @@
         -->
     </bean>
 
-    <bean id="requestRepository" class="org.hoydaa.restmock.server.handler.manager.RequestRepositoryImpl"/>
+    <bean id="requestRepository" class="org.hoydaa.restmock.server.manager.RequestRepositoryImpl"/>
 
     <bean id="handler" class="org.hoydaa.restmock.server.MockHandler">
         <property name="idCalculators">
@@ -37,14 +37,14 @@
                 </entry>
 
                 <entry key="^/.+$">
-                    <bean class="org.hoydaa.restmock.server.handler.manager.RestMockHandler">
+                    <bean class="org.hoydaa.restmock.server.manager.RestMockHandler">
                         <property name="managerHandler">
-                            <bean class="org.hoydaa.restmock.server.handler.manager.ManagerHandler">
+                            <bean class="org.hoydaa.restmock.server.manager.ManagerHandler">
                                 <property name="requestRepository" ref="requestRepository"/>
                             </bean>
                         </property>
                         <property name="mockHandler">
-                            <bean class="org.hoydaa.restmock.server.handler.manager.MockHandler">
+                            <bean class="org.hoydaa.restmock.server.manager.MockHandler">
                                 <property name="requestRepository" ref="requestRepository"/>
                             </bean>
                         </property>

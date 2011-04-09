@@ -12,32 +12,25 @@ import java.io.IOException;
 public class RestMock {
 
     public static IExpectationSetters defineServer(String uri) {
-        return defineServer(uri, false);
-    }
-
-    public static IExpectationSetters defineServer(String uri, boolean startServer) {
         ServerControl control = new ServerControl();
         Controls.addControl(control);
+        return control.defineServer(uri);
+    }
 
-        if (startServer) {
-            try {
-                ServerFactory.startServer(8989);
-            } catch (Exception e) {
-                throw new RuntimeException("Error while starting the server.");
-            }
+    public static IExpectationSetters startServer(int port) {
+        try {
+            ServerFactory.createServer(8989);
+        } catch (Exception e) {
+            throw new RuntimeException("Error while starting the server.");
         }
 
-        return control.defineServer(uri);
+        return defineServer("http://localhost:" + port);
     }
 
     public static IExpectationSetters configure(String json) throws IOException {
         ServerControl control = new ServerControl();
         Controls.addControl(control);
         return control.configure(json);
-    }
-
-    public static void main(String args[]) {
-        RestMock.defineServer("http://localhost:8989", true);
     }
 
 }

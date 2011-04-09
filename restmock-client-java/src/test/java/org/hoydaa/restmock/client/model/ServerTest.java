@@ -7,10 +7,15 @@ import org.hoydaa.restmock.client.internal.ServerControl;
 import org.hoydaa.restmock.model.Headers;
 import org.hoydaa.restmock.model.Method;
 import org.hoydaa.restmock.model.Server;
+import org.hoydaa.restmock.server.manager.ResponseStatus;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
 
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 import static junit.framework.TestCase.assertEquals;
 
 /**
@@ -40,6 +45,18 @@ public class ServerTest {
         ServerControl control = (ServerControl) RestMock.configure(json);
 
         assertServer(control.getServer());
+    }
+
+    @Test
+    public void shouldStartServerWhenSpecified() {
+        RestMock.startServer(8989);
+        try {
+            URLConnection urlConnection = new URL("http://localhost:8989").openConnection();
+            IOUtils.toString(urlConnection.getInputStream());
+            fail("Should not have come this far:)");
+        } catch (IOException e) {
+            assertTrue(e.getMessage().contains("" + ResponseStatus.NOT_READY.getCode()));
+        }
     }
 
     private void assertServer(Server server) throws IOException {
